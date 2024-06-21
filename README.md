@@ -57,9 +57,9 @@ To run this project, you will need to add the following environment variables to
 
 `VITE_API_KEY` YOUR_API_KEY
 
-`VITE_BASE_URL_PLAYLIST` https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=200
+`VITE_BASE_URL_PLAYLIST` 'https://youtube.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&maxResults=50'
 
-`VITE_BASE_URL_PLAYLIST_DETAILS `'https://www.googleapis.com/youtube/v3/playlists?part=id,snippet,contentDetails'
+`VITE_BASE_URL_PLAYLIST_DETAILS ` 'https://www.googleapis.com/youtube/v3/playlists?part=id,snippet,contentDetails'
 
 ## Run Locally
 

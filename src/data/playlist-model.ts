@@ -12,6 +12,7 @@ export interface PlaylistModel {
   setLoading: Action<PlaylistModel, boolean>;
   setError: Action<PlaylistModel, string>;
   getPlaylist: Thunk<PlaylistModel, string>;
+  removePlaylist: Action<PlaylistModel, string>;
 }
 
 const playlistModel: PlaylistModel = persist(
@@ -21,6 +22,11 @@ const playlistModel: PlaylistModel = persist(
     isLoading: false,
     addPlaylist: action((state, payload) => {
       state.data[payload.playListId] = payload;
+    }),
+
+    removePlaylist: action((state, payload) => {
+      const pId = state.data;
+      delete pId[payload];
     }),
 
     setLoading: action((state, payload) => {
@@ -35,8 +41,11 @@ const playlistModel: PlaylistModel = persist(
       async ({ addPlaylist, setLoading, setError }, playlistId, { getState }) => {
         if (getState().data[playlistId]) {
           setError('Playlist already exist');
-          toast.error('Playlist already exist');
-          return;
+          return toast.error('Playlist already exist');
+        }
+        if (Object.keys(getState().data).length >= 10 ){
+          setError('Maximum playlist size exceeded');
+          return toast.error('Maximum playlist size exceeded');
         }
         setLoading(true);
         const loadingToastId = toast.loading('loading...');
@@ -44,7 +53,7 @@ const playlistModel: PlaylistModel = persist(
           const playlist = await getPlaylist(playlistId);
           addPlaylist(playlist);
           toast.success('Successfully added playlist');
-          setError('');
+          return setError('');
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
           setError(e.response?.data.error?.message || 'Something went wrong');

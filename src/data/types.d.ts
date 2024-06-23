@@ -41,6 +41,7 @@ export interface FavoriteModel {
 export interface RecentModal {
   items: string[];
   addToRecent: Action<RecentModal, string>;
+  removeFromRecent: Action<RecentModal, string>;
 }
 
 // theme model types

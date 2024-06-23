@@ -1,9 +1,7 @@
 import React from 'react';
 import { Box, Button, Container, FormControl, TextField } from '@mui/material';
-import { InputHeaderProps } from '../types';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const InputHeader: React.FC<InputHeaderProps> = ({ url, handleChange, handleSubmit, error }) => {
+const InputHeader: React.FC<InputHeaderProps> = ({ url, handleChange, handleSubmit }) => {
 
   return (
     <Container maxWidth="sm">

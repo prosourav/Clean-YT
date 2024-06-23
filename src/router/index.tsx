@@ -1,19 +1,28 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "../screens/home";
+import Recents from "../screens/recents";
+import Favoutite from "../screens/favourite";
 
-const AppRoute = ({ children, playlistArray, playList, loading, error }) => {
+export interface LayoutProps {
+  children: React.ReactNode
+}
+
+const AppRoute = ({ children }: LayoutProps) => {
   return (
     <BrowserRouter>
       {children}
       <Routes>
-        <Route
-          path="/"
-          element={<Home {...{ playlistArray, loading, error }} />}
-        />
+        <Route path="/" element={<Home />} />
+
+        <Route path="/favourites" element={<Favoutite />} />
+
+        <Route path="/recents" element={<Recents />} />
         <Route
           path="/player/:playlistId"
-          element={<PlayerPage playList={playList} />}
+          element={<h1>Playlist details</h1>
+          }
         />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<h1>Not found</h1>} />
       </Routes>
     </BrowserRouter>
   );

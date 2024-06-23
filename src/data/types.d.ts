@@ -1,16 +1,18 @@
 import { Action } from "easy-peasy";
+import { PlaylistModel } from "./playlist-model";
 import { ContentDetailsType, YoutubeThumbnail } from "../api/types";
 
 
 // store types
 export interface StoreModel {
-  playlists: PlaylistModel;
+  playlists: PlaylistModel
   favorites: FavoriteModel;
   recents: RecentModal;
   theme: ThemeModel;
 }
 
 // playlist model types
+
 interface Playlist {
   playListId: string,
   playlistTitle: string,
@@ -26,26 +28,6 @@ interface PlaylistItems {
   description: string;
   thumbnail: YoutubeThumbnail;
   contentDetails: ContentDetailsType | undefined;
-}
-
-export interface PlaylistModel {
-  data: Record<string, Playlist>;
-  error: string;
-  isLoading: boolean;
-  addPlaylist: Action<PlaylistModel, Playlist>;
-  setLoading: Action<PlaylistModel, boolean>;
-  setError: Action<PlaylistModel, string>;
-  getPlaylist: Thunk<PlaylistModel, string>;
-}
-
-export interface PlaylistModel {
-  data: Record<string, Playlist>;
-  error: string;
-  isLoading: boolean;
-  addPlaylist: Action<PlaylistModel, Playlist>;
-  setLoading: Action<PlaylistModel, boolean>;
-  setError: Action<PlaylistModel, string>;
-  getPlaylist: Thunk<PlaylistModel, string>;
 }
 
 // favorite model types

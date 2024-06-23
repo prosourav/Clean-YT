@@ -3,6 +3,7 @@ import LayOut from "./components/Layout";
 import AppRoute from "./router";
 import { useStoreState } from "easy-peasy";
 import { StoreModel } from "./data/types";
+import { Toaster } from "react-hot-toast";
 
 
 function App() {
@@ -12,10 +13,10 @@ function App() {
     palette: {
       mode: theme.mode,
       primary: {
-        main: theme.primaryColor,
+        main: 'rgb(255, 0,0)',
       },
       secondary: {
-        main: theme.secondaryColor,
+        main: '#ffff',
       },
     },
   });
@@ -23,6 +24,7 @@ function App() {
   return (
     <ThemeProvider theme={muiTheme}>
       <CssBaseline />
+      <Toaster position="bottom-right" />
       <AppRoute >
         <LayOut />
       </AppRoute>

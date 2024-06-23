@@ -1,7 +1,7 @@
 import { action, thunk, persist, Action, Thunk } from 'easy-peasy';
 import getPlaylist from '../api';
 import { Playlist } from './types';
-
+import toast from 'react-hot-toast';
 
 
 export interface PlaylistModel {
@@ -14,7 +14,6 @@ export interface PlaylistModel {
   getPlaylist: Thunk<PlaylistModel, string>;
 }
 
-// Create the model
 const playlistModel: PlaylistModel = persist(
   {
     data: {},
@@ -23,7 +22,7 @@ const playlistModel: PlaylistModel = persist(
     addPlaylist: action((state, payload) => {
       state.data[payload.playListId] = payload;
     }),
-    
+
     setLoading: action((state, payload) => {
       state.isLoading = payload;
     }),
@@ -35,16 +34,23 @@ const playlistModel: PlaylistModel = persist(
     getPlaylist: thunk(
       async ({ addPlaylist, setLoading, setError }, playlistId, { getState }) => {
         if (getState().data[playlistId]) {
+          setError('Playlist already exist');
+          toast.error('Playlist already exist');
           return;
         }
         setLoading(true);
+        const loadingToastId = toast.loading('loading...');
         try {
           const playlist = await getPlaylist(playlistId);
           addPlaylist(playlist);
+          toast.success('Successfully added playlist');
+          setError('');
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
           setError(e.response?.data.error?.message || 'Something went wrong');
+          toast.error(e.response?.data.error?.message || 'Playlist already exist');
         } finally {
+          toast.dismiss(loadingToastId);
           setLoading(false);
         }
       }

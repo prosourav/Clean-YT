@@ -1,9 +1,9 @@
 import { createStore, createTypedHooks } from 'easy-peasy';
-import playlistModel from './playlist-model';
 import favoriteModel from './favourite-model';
 import recentModel from './recent-model';
 import themeModel from './theme-model';
 import { StoreModel } from './types';
+import playlistModel from './playlist-model';
 
 
 const store = createStore<StoreModel>({

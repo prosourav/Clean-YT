@@ -1,9 +1,12 @@
 import axios from "axios";
 import { GetPlayListType, PlayListsResponseType } from "./types";
 
+const key = import.meta.env.VITE_API_KEY;
+const playlist_url = import.meta.env.VITE_BASE_URL_PLAYLIST;
+const playList_details_url = import.meta.env.VITE_BASE_URL_PLAYLIST_DETAILS;
 
 const getPlayList = async ({ playListId, nextPageToken = '', results = [] }: GetPlayListType): Promise<PlayListsResponseType[]> => {
-  const url = `${import.meta.env.VITE_BASE_URL_PLAYLIST}&playlistId=${playListId}&key=${import.meta.env.VITE_API_KEY}&pageToken=${nextPageToken}`;
+  const url = `${playlist_url}&playlistId=${playListId}&key=${key}&pageToken=${nextPageToken}`;
   const { data } = await axios.get(url);
 
   results = [...results, ...data.items];
@@ -16,7 +19,7 @@ const getPlayList = async ({ playListId, nextPageToken = '', results = [] }: Get
 };
 
 const getPlayListDetails = async (playListId: string) => {
-  const url = `${import.meta.env.VITE_BASE_URL_PLAYLIST_DETAILS}&id=${playListId}&key=${import.meta.env.VITE_API_KEY}`;
+  const url = `${playList_details_url}&id=${playListId}&key=${key}`;
   const { data } = await axios.get(url);
   const response = await getPlayList({ playListId });
 

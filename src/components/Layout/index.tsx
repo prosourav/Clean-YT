@@ -5,12 +5,15 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from '@mui/material';
+import { pages } from '../../config';
 
 
 export default function ButtonAppBar() {
-
-  const pages = ['Favourites', 'Recents'];
-
+// const toggleTheme = useStoreActions(((actions) => actions.theme.toggleTheme));
+ 
+  // const handleTheme = () => {
+  //   toggleTheme();
+  // };
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor:"rgb(255,0,0)" }}>

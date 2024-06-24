@@ -1,0 +1,3 @@
+interface PlayListIdType {
+  playlistId?: string;
+}

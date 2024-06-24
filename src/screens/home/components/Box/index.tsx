@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Container, Grid, Typography } from "@mui/material";
-import PlaylistCardItem from "../Card";
-import { useStoreActions, useStoreState } from "../../data/store";
+import PlaylistCardItem from "../../../../components/Card";
+import { useStoreActions, useStoreState } from "../../../../data/store";
 
 const Box: React.FC<BoxType> = ({ listItems, title }) => {
 
@@ -42,7 +42,7 @@ const Box: React.FC<BoxType> = ({ listItems, title }) => {
   }
 
   return (
-    <Container maxWidth={"lg"} sx={{ my: 14 }}>
+    <Container maxWidth={"lg"} sx={{ my: 2 }}>
       <Typography align="left" variant="h5" sx={{ margin: "20px" }}>
         {title}({listItems.length})
       </Typography>

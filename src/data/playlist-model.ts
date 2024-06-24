@@ -43,7 +43,7 @@ const playlistModel: PlaylistModel = persist(
           setError('Playlist already exist');
           return toast.error('Playlist already exist');
         }
-        if (Object.keys(getState().data).length >= 10 ){
+        if (Object.keys(getState().data).length >= 10) {
           setError('Maximum playlist size exceeded');
           return toast.error('Maximum playlist size exceeded');
         }
@@ -64,6 +64,7 @@ const playlistModel: PlaylistModel = persist(
         }
       }
     ),
+
   }, { storage: 'localStorage' }
 );
 

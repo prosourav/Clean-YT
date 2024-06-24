@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useStoreActions, useStoreState } from "../../data/store";
 import isvalidUrl from "../../utils/isValidUrl";
 import formatUrl from "../../utils/formatUrl";
-import Box from "../../components/Box";
+import Box from "./components/Box";
 
 
 const Home = () => {

@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import { useStoreState } from "../../data/store";
 
-import Box from "../../components/Box";
+import Box from "../home/components/Box";
 
 
 const Recents = () => {

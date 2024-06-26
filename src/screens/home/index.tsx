@@ -1,33 +1,24 @@
 import { Box as MuiBox, Container, Typography } from "@mui/material";
 import InputHeader from "../../components/HeaderInput";
-import { useState } from "react";
-import { useStoreActions, useStoreState } from "../../data/store";
-import isvalidUrl from "../../utils/isValidUrl";
-import formatUrl from "../../utils/formatUrl";
+import { useStoreState } from "../../data/store";
 import Box from "./components/Box";
+import useFechPlayList from "../../hooks/useFechPlayList";
 
 
 const Home = () => {
-  const [url, setUrl] = useState('');
-
-  const { getPlaylist, setError } = useStoreActions(actions => actions.playlists);
+  const { handleSubmit, setUrl, url } = useFechPlayList();
   const { error, data, isLoading } = useStoreState((state) => state.playlists);
   const { items } = useStoreState((state) => state.favorites);
   const { items: recents } = useStoreState((state) => state.recents);
   const playlistsData = Object.keys(data);
 
 
-  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => setUrl(target.value);
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (isvalidUrl(url)) {
-      const playListUrlId = formatUrl(url);
-      getPlaylist(playListUrlId);
-      return setUrl('');
-    }
-    setError("Invalid Url");
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => setUrl(event.target.value);
+  const addNewPlayList = (event: React.FormEvent<HTMLFormElement>) => {
+    handleSubmit({ event });
+    setUrl('');
   };
+
 
   return (
     <Container>
@@ -35,7 +26,7 @@ const Home = () => {
         <Typography align="center" sx={{ color: "#fff", mt: 3, mb: 2 }} variant="body1">
           {'Paste your desired playlist id and hit add button'.toUpperCase()}
         </Typography>
-        <InputHeader {...{ url, handleChange, handleSubmit, error }} />
+        <InputHeader {...{ url, handleChange, handleSubmit: addNewPlayList, error }} />
 
       </MuiBox>
       <Box listItems={playlistsData} loading={isLoading} error={error} title={"All PlayLists"} />

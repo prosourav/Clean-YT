@@ -4,7 +4,6 @@ import PlaylistCardItem from "../../../../components/Card";
 import { useStoreActions, useStoreState } from "../../../../data/store";
 
 const Box: React.FC<BoxType> = ({ listItems, title }) => {
-
   const { data } = useStoreState((state) => state.playlists);
   const { addToFavorite, removeFromFavorite } = useStoreActions(actions => actions.favorites);
   const { removePlaylist } = useStoreActions(actions => actions.playlists);
@@ -14,6 +13,7 @@ const Box: React.FC<BoxType> = ({ listItems, title }) => {
 
   const addTofav = (id: string) => addToFavorite(id);
   const addToRecents = (id: string) => addToRecent(id);
+
   const isInFavoriteList = (id: string) => {
     return items.includes(id) ? true : false;
   };

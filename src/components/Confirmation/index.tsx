@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-export default function AlertDialog({ open, setOpen, handleDelete }: DialogProps) {
+export default function AlertDialog({ open, setOpen, handleDelete, playListName }: DialogProps) {
 
   const handleClose = () => {
     setOpen(false);
@@ -30,7 +30,7 @@ export default function AlertDialog({ open, setOpen, handleDelete }: DialogProps
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are You sure you want to delete this item?
+            Are You sure you want to delete {playListName}?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

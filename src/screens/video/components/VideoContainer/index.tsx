@@ -1,49 +1,40 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Stack } from "@mui/material";
-import VideoDescriptions from "../../../../components/VideoDescription";
+// import VideoDescriptions from "../../../../components/VideoDescription";
 import VideoPlayer from "../../../../components/VideoPlayer";
-import Note from "../../../../components/Note";
+// import Note from "../../../../components/Note";
 import { useStoreActions } from "../../../../data/store";
-import { Playlist } from "../../../../data/types";
-import { useEffect, useState } from "react";
-import getVideoItems from "../../../../utils/getVideoItems";
+import { PlaylistItems } from "../../../../data/types";
+import { useEffect } from "react";
 
 interface VideoContainerProps {
-  items: Playlist;
+  playlistItems: PlaylistItems[];
   visitedplayList: Record<string, Record<string, string>>;
   playlistId: string | undefined;
+  url: string;
+  setUrl: React.Dispatch<React.SetStateAction<string>>;
+  videos: string[];
+  channelTitle: string,
+  activeVideoId: string
 }
 
-const VideoContainer = ({ items, visitedplayList, playlistId }: VideoContainerProps) => {
-  const [url, setUrl] = useState('');
-
-  const { playlistItems } = items;
-  const videos: string[] = getVideoItems(playlistItems);
+const VideoContainer = ({ url, setUrl, playlistItems, visitedplayList, playlistId, videos, activeVideoId }: VideoContainerProps) => {
 
   const { updateVisitedPlayList } = useStoreActions(actions => actions.videoInfo);
 
   useEffect(() => {
     if (playlistId && playlistId in visitedplayList) {
-      console.log("called 1");
       setUrl(`https://www.youtube.com/watch?v=${visitedplayList[playlistId].id}`);
     } else {
-      console.log("called 2");
       setUrl(`https://www.youtube.com/watch?v=${videos[0]}`);
     }
   }, [playlistId, playlistItems]);
 
-  const handleAdd = () => {
 
-    if (playlistId) {
-      return updateVisitedPlayList({ [playlistId]: { id: url.split('=')[1] } });
-    }
-    console.warn("Handle Add broken");
-  };
+
+  const handleAdd = () => updateVisitedPlayList({ [playlistId as string]: { id: activeVideoId } });
 
   const handleNext = () => {
     const currentVideoId = url.split('=')[1];
-    console.log("current VideoId: ", currentVideoId);
     const index = videos.findIndex(v => v === currentVideoId);
 
     if (videos.length === index + 1) {
@@ -56,8 +47,8 @@ const VideoContainer = ({ items, visitedplayList, playlistId }: VideoContainerPr
     <Container>
       <VideoPlayer {...{ handleAdd, url, handleNext }} />
       <Stack>
-        <VideoDescriptions />
-        <Note />
+        {/* <VideoDescriptions {...{ channelTitle, playlistItems }}  /> */}
+        {/* <Note /> */}
       </Stack>
     </Container>
   );

@@ -1,10 +1,9 @@
 import { action, thunk, persist, Action, Thunk } from 'easy-peasy';
 import getPlaylist from '../api';
-import { Playlist } from './types';
 import toast from 'react-hot-toast';
+import { Playlist } from './types';
 import { addMinutes } from 'date-fns';
 import { cacheTime } from '../config';
-
 
 export interface PlaylistModel {
   data: Record<string, Playlist>;
@@ -16,6 +15,7 @@ export interface PlaylistModel {
   getPlaylist: Thunk<PlaylistModel, { playlistId: string; refetch?: boolean }>;
   removePlaylist: Action<PlaylistModel, string>;
 }
+
 
 const playlistModel: PlaylistModel = persist(
   {
@@ -39,14 +39,14 @@ const playlistModel: PlaylistModel = persist(
       state.error = payload;
     }),
 
+
     getPlaylist: thunk(
       async (actions, payload, helpers) => {
         const { addPlaylist, setLoading, setError } = actions;
         const { getState } = helpers;
         const { playlistId, refetch = false } = payload;
-     
-        if (Object.keys(getState().data).length >= 10) {
-          setError('Maximum playlist size exceeded');
+
+        if (Object.keys(getState().data).length >= 10 && !refetch) {
           return toast.error('Maximum playlist size exceeded');
         }
 
@@ -64,14 +64,14 @@ const playlistModel: PlaylistModel = persist(
         setLoading(true);
         const loadingToastId = toast.loading('loading...');
         try {
-          const playlist = await getPlaylist(playlistId);
+          const playlist: Playlist = await getPlaylist(playlistId);
           addPlaylist(playlist);
-          toast.success('Successfully added playlist');
-          return setError('');
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (e: any) {
-          setError(e.response?.data.error?.message || 'Something went wrong');
-          toast.error(e.response?.data.error?.message || 'Playlist already exist');
+          toast.success(`Successfully ${refetch ? 'updated' : 'added'} playlist`);
+          setError('');
+        } catch (e: unknown) {
+          const error = e as { response?: { data?: { error?: { message?: string } } } };
+          setError(error.response?.data?.error?.message || 'Something went wrong');
+          toast.error(error.response?.data?.error?.message || 'Playlist already exists');
         } finally {
           toast.dismiss(loadingToastId);
           setLoading(false);
@@ -83,4 +83,3 @@ const playlistModel: PlaylistModel = persist(
 );
 
 export default playlistModel;
-

@@ -9,7 +9,7 @@ const Recents = () => {
   const { items: recents } = useStoreState((state) => state.recents);
 
   return (
-    <Container>
+    <Container sx={{ marginTop: '8rem' }}>
       <Box listItems={recents} title={"Recent PlayLists"} />
     </Container>
   );

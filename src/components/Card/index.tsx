@@ -1,8 +1,7 @@
 import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { Box } from "@mui/material";
+import { useState } from "react";
+import { Box, CardContent, CardMedia, Typography } from "@mui/material";
+import useFechPlayList from "../../hooks/useFechPlayList";
 import Actionbuttons from "./actionbuttons";
 
 
@@ -15,8 +14,18 @@ const PlaylistCardItem: React.FC<PlaylistCardItemProps> = ({
   handleRemove,
   addTofav,
   addToRecents,
-  isInFavoriteList
+  isInFavoriteList,
 }) => {
+
+  const [isRotating, setIsRotating] = useState(false);
+  const [open, setOpen] = useState(false);
+  const { handleSubmit } = useFechPlayList(playListId);
+
+  const handleRefetch = () => {
+    handleSubmit({refetch: true});
+    setIsRotating(!isRotating);
+  };
+
 
   return (
     <Card
@@ -24,7 +33,13 @@ const PlaylistCardItem: React.FC<PlaylistCardItemProps> = ({
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        margin: 1,
+        marginX: 2,
+        marginY: 1,
+        transition: "transform 0.3s, box-shadow 0.3s",
+        '&:hover': {
+          transform: "scale(1.09)",
+          boxShadow: "0 8px 16px rgba(0, 0, 0, 0.2)"
+        }
       }}
     >
       <CardMedia
@@ -42,14 +57,25 @@ const PlaylistCardItem: React.FC<PlaylistCardItemProps> = ({
         <Typography variant="body2" color="text.secondary">
           {channelTitle}
         </Typography>
+
       </CardContent>
       <Box sx={{ flexGrow: 1 }}></Box>
-      <Actionbuttons {...{
-        title, playListId, handleRemove,
-        addTofav, addToRecents, isInFavoriteList
-      }} />
+      <Actionbuttons
+        title={title}
+        playListId={playListId}
+        handleRemove={handleRemove}
+        addTofav={addTofav}
+        open={open}
+        setOpen={setOpen}
+        playlistTitle={playlistTitle}
+        addToRecents={addToRecents}
+        isInFavoriteList={isInFavoriteList}
+        handleRefetch={handleRefetch}
+        isRotating={isRotating}
+      />
     </Card>
   );
 };
 
 export default PlaylistCardItem;
+

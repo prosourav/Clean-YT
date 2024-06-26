@@ -10,7 +10,7 @@ const SideBar: React.FC<SidebarProps> = ({ playlistItems, channelTitle, setUrl, 
       id: playlistItem.contentDetails?.videoId,
       primary: playlistItem.title,
       secondary: channelTitle,
-      img: playlistItem.thumbnail.url,
+      img: playlistItem.thumbnail?.url,
     };
   });
 

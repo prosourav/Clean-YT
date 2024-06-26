@@ -1,9 +1,10 @@
 import { createStore, createTypedHooks } from 'easy-peasy';
-import playlistModel from './playlist-model';
 import favoriteModel from './favourite-model';
 import recentModel from './recent-model';
 import themeModel from './theme-model';
 import { StoreModel } from './types';
+import playlistModel from './playlist-model';
+import videoInfoModel from './videoInfo-model';
 
 
 const store = createStore<StoreModel>({
@@ -11,6 +12,7 @@ const store = createStore<StoreModel>({
   favorites: favoriteModel,
   recents: recentModel,
   theme: themeModel,
+  videoInfo: videoInfoModel,
 },
 );
 

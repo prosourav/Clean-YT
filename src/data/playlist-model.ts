@@ -1,8 +1,9 @@
 import { action, thunk, persist, Action, Thunk } from 'easy-peasy';
 import getPlaylist from '../api';
+import toast from 'react-hot-toast';
 import { Playlist } from './types';
-
-
+import { addMinutes } from 'date-fns';
+import { cacheTime } from '../config';
 
 export interface PlaylistModel {
   data: Record<string, Playlist>;
@@ -11,10 +12,11 @@ export interface PlaylistModel {
   addPlaylist: Action<PlaylistModel, Playlist>;
   setLoading: Action<PlaylistModel, boolean>;
   setError: Action<PlaylistModel, string>;
-  getPlaylist: Thunk<PlaylistModel, string>;
+  getPlaylist: Thunk<PlaylistModel, { playlistId: string; refetch?: boolean }>;
+  removePlaylist: Action<PlaylistModel, string>;
 }
 
-// Create the model
+
 const playlistModel: PlaylistModel = persist(
   {
     data: {},
@@ -23,7 +25,12 @@ const playlistModel: PlaylistModel = persist(
     addPlaylist: action((state, payload) => {
       state.data[payload.playListId] = payload;
     }),
-    
+
+    removePlaylist: action((state, payload) => {
+      const pId = state.data;
+      delete pId[payload];
+    }),
+
     setLoading: action((state, payload) => {
       state.isLoading = payload;
     }),
@@ -32,25 +39,47 @@ const playlistModel: PlaylistModel = persist(
       state.error = payload;
     }),
 
+
     getPlaylist: thunk(
-      async ({ addPlaylist, setLoading, setError }, playlistId, { getState }) => {
-        if (getState().data[playlistId]) {
-          return;
+      async (actions, payload, helpers) => {
+        const { addPlaylist, setLoading, setError } = actions;
+        const { getState } = helpers;
+        const { playlistId, refetch = false } = payload;
+
+        if (Object.keys(getState().data).length >= 10 && !refetch) {
+          return toast.error('Maximum playlist size exceeded');
         }
+
+        if (!refetch && getState().data[playlistId]) {
+          return null;
+        }
+
+        if (refetch) {
+          const lastCached = getState().data[playlistId].cache;
+          if (addMinutes(lastCached, cacheTime) > new Date()) {
+            return toast.error('PlayList is already updated');
+          }
+        }
+
         setLoading(true);
+        const loadingToastId = toast.loading('loading...');
         try {
-          const playlist = await getPlaylist(playlistId);
+          const playlist: Playlist = await getPlaylist(playlistId);
           addPlaylist(playlist);
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (e: any) {
-          setError(e.response?.data.error?.message || 'Something went wrong');
+          toast.success(`Successfully ${refetch ? 'updated' : 'added'} playlist`);
+          setError('');
+        } catch (e: unknown) {
+          const error = e as { response?: { data?: { error?: { message?: string } } } };
+          setError(error.response?.data?.error?.message || 'Something went wrong');
+          toast.error(error.response?.data?.error?.message || 'Playlist already exists');
         } finally {
+          toast.dismiss(loadingToastId);
           setLoading(false);
         }
       }
     ),
+
   }, { storage: 'localStorage' }
 );
 
 export default playlistModel;
-

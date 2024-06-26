@@ -9,7 +9,7 @@ const Favoutite = () => {
   const { items } = useStoreState((state) => state.favorites);
 
   return (
-    <Container>
+    <Container sx={{ marginTop: '8rem' }}>
       <Box listItems={items} title={"Favourite PlayLists"} />
     </Container>
   );

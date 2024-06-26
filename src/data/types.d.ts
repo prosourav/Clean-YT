@@ -14,7 +14,6 @@ export interface StoreModel {
 }
 
 // playlist model types
-
 interface Playlist {
   playListId: string,
   playlistTitle: string,
@@ -22,7 +21,8 @@ interface Playlist {
   playlistThumbnail: string,
   channelId: string,
   channelTitle: string,
-  playlistItems: PlaylistItems[]
+  playlistItems: PlaylistItems[],
+  cache: Date,
 }
 
 interface PlaylistItems {

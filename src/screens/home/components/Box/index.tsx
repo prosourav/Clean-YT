@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Container, Grid, Typography } from "@mui/material";
-import PlaylistCardItem from "../Card";
-import { useStoreActions, useStoreState } from "../../data/store";
+import PlaylistCardItem from "../../../../components/Card";
+import { useStoreActions, useStoreState } from "../../../../data/store";
 
 const Box: React.FC<BoxType> = ({ listItems, title }) => {
-
   const { data } = useStoreState((state) => state.playlists);
   const { addToFavorite, removeFromFavorite } = useStoreActions(actions => actions.favorites);
   const { removePlaylist } = useStoreActions(actions => actions.playlists);
@@ -14,6 +13,7 @@ const Box: React.FC<BoxType> = ({ listItems, title }) => {
 
   const addTofav = (id: string) => addToFavorite(id);
   const addToRecents = (id: string) => addToRecent(id);
+
   const isInFavoriteList = (id: string) => {
     return items.includes(id) ? true : false;
   };
@@ -42,7 +42,7 @@ const Box: React.FC<BoxType> = ({ listItems, title }) => {
   }
 
   return (
-    <Container maxWidth={"lg"} sx={{ my: 14 }}>
+    <Container maxWidth={"lg"} sx={{ my: 2 }}>
       <Typography align="left" variant="h5" sx={{ margin: "20px" }}>
         {title}({listItems.length})
       </Typography>

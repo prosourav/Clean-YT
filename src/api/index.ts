@@ -49,6 +49,7 @@ const getPlayListDetails = async (playListId: string) => {
     channelId,
     channelTitle,
     playlistItems,
+    cache: new Date()
   };
 };
 

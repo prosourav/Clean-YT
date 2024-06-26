@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import { useStoreState } from "../../data/store";
 
-import Box from "../../components/Box";
+import Box from "../home/components/Box";
 
 
 const Recents = () => {
@@ -9,7 +9,7 @@ const Recents = () => {
   const { items: recents } = useStoreState((state) => state.recents);
 
   return (
-    <Container>
+    <Container sx={{ marginTop: '8rem' }}>
       <Box listItems={recents} title={"Recent PlayLists"} />
     </Container>
   );

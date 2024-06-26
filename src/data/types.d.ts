@@ -1,6 +1,7 @@
 import { Action } from "easy-peasy";
 import { PlaylistModel } from "./playlist-model";
 import { ContentDetailsType, YoutubeThumbnail } from "../api/types";
+import { VideoInfoModel } from "./videoInfo-model";
 
 
 // store types
@@ -9,10 +10,10 @@ export interface StoreModel {
   favorites: FavoriteModel;
   recents: RecentModal;
   theme: ThemeModel;
+  videoInfo: VideoInfoModel;
 }
 
 // playlist model types
-
 interface Playlist {
   playListId: string,
   playlistTitle: string,
@@ -20,7 +21,8 @@ interface Playlist {
   playlistThumbnail: string,
   channelId: string,
   channelTitle: string,
-  playlistItems: PlaylistItems[]
+  playlistItems: PlaylistItems[],
+  cache: Date,
 }
 
 interface PlaylistItems {

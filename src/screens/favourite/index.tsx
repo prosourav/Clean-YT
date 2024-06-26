@@ -1,15 +1,15 @@
 
 import { Container } from "@mui/material";
-import Box from "../../components/Box";
+import Box from "../home/components/Box";
 import { useStoreState } from "../../data/store";
 
 
 const Favoutite = () => {
 
-  const { items} = useStoreState((state) => state.favorites);
+  const { items } = useStoreState((state) => state.favorites);
 
   return (
-    <Container>
+    <Container sx={{ marginTop: '8rem' }}>
       <Box listItems={items} title={"Favourite PlayLists"} />
     </Container>
   );

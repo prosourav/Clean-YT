@@ -10,9 +10,9 @@ import { StoreProvider } from 'easy-peasy';
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <StoreProvider store={store}>
       <App />
     </StoreProvider>
-  </React.StrictMode>
+  // </React.StrictMode>
 );

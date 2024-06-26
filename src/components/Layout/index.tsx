@@ -16,8 +16,8 @@ export default function ButtonAppBar() {
   //   toggleTheme();
   // };
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: "rgb(255,0,0)", position:'fixed', top:'0', zIndex:'100' }}>
+    <Box sx={{ flexGrow: 1, marginBottom:'4rem' }}>
+      <AppBar position="static" sx={{ backgroundColor: "rgb(255,0,0)", position:'fixed', top:'0', zIndex:'100', }}>
         <Toolbar>
           <IconButton
             size="large"

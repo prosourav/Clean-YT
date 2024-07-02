@@ -11,4 +11,5 @@ interface SidebarProps {
   playlistTitle: string
   videos: string[];
   activeVideoId:string;
+  playlistId
 }

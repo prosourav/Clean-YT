@@ -1,10 +1,9 @@
-import { Container, Stack } from "@mui/material";
-// import VideoDescriptions from "../../../../components/VideoDescription";
+import { Container } from "@mui/material";
 import VideoPlayer from "../../../../components/VideoPlayer";
-// import Note from "../../../../components/Note";
 import { useStoreActions } from "../../../../data/store";
 import { PlaylistItems } from "../../../../data/types";
-import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import VideoInfo from "../../../../components/VideoInfo";
 
 interface VideoContainerProps {
   playlistItems: PlaylistItems[];
@@ -13,43 +12,39 @@ interface VideoContainerProps {
   url: string;
   setUrl: React.Dispatch<React.SetStateAction<string>>;
   videos: string[];
-  channelTitle: string,
-  activeVideoId: string
+  channelTitle: string;
+  activeVideoId: string;
+  desc: string;
 }
 
-const VideoContainer = ({ url, setUrl, playlistItems, visitedplayList, playlistId, videos, activeVideoId }: VideoContainerProps) => {
 
+const VideoContainer: React.FC<VideoContainerProps> = ({ url, playlistId, videos, desc }: VideoContainerProps) => {
+  const navigate = useNavigate();
   const { updateVisitedPlayList } = useStoreActions(actions => actions.videoInfo);
+  const activeVideoId = playlistId?.split("&watch=")[1];
 
-  useEffect(() => {
-    if (playlistId && playlistId in visitedplayList) {
-      setUrl(`https://www.youtube.com/watch?v=${visitedplayList[playlistId].id}`);
-    } else {
-      setUrl(`https://www.youtube.com/watch?v=${videos[0]}`);
-    }
-  }, [playlistId, playlistItems]);
-
-
-
-  const handleAdd = () => updateVisitedPlayList({ [playlistId as string]: { id: activeVideoId } });
-
-  const handleNext = () => {
-    const currentVideoId = url.split('=')[1];
-    const index = videos.findIndex(v => v === currentVideoId);
-
-    if (videos.length === index + 1) {
-      return setUrl(`https://www.youtube.com/watch?v=${videos[0]}`);
-    }
-    return setUrl(`https://www.youtube.com/watch?v=${videos[index + 1]}`);
+  const handleAdd = () => {
+    const key = playlistId?.split("&")[0] as string;
+    updateVisitedPlayList({ [key]: { id: activeVideoId } } as Record<string, Record<string, string>>);
   };
 
+  const handleNext = () => {
+    const key = playlistId?.split("&")[0] as string;
+
+    const index = videos.findIndex(v => v === activeVideoId);
+
+    if (videos.length === index + 1) {
+
+      return navigate(`/player/${key}&watch=${videos[0]}`);
+    }
+    return navigate(`/player/${key}&watch=${videos[index + 1]}`);
+
+  };
+  
   return (
     <Container>
       <VideoPlayer {...{ handleAdd, url, handleNext }} />
-      <Stack>
-        {/* <VideoDescriptions {...{ channelTitle, playlistItems }}  /> */}
-        {/* <Note /> */}
-      </Stack>
+      <VideoInfo description={desc} />
     </Container>
   );
 };

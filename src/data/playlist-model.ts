@@ -51,7 +51,11 @@ const playlistModel: PlaylistModel = persist(
         }
 
         if (!refetch && getState().data[playlistId]) {
-          return null;
+          // if video page gets reload
+          if(window.location.href.includes('&')){
+            return null;
+          }
+          return toast.success('Playlist already exists');
         }
 
         if (refetch) {

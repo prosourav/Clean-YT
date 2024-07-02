@@ -1,16 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import formatUrl from '../utils/formatUrl';
 import isvalidUrl from '../utils/isValidUrl';
-import { useStoreActions } from '../data/store';
+import { useStoreActions, useStoreState } from '../data/store';
 
 type HandleSubmitProps = {
   event?: React.FormEvent<HTMLFormElement>;
   refetch?: boolean;
 };
 
-const useFechPlayList = (urlId?: string) => {
+const useFechPlayList = (urlId?: string, watch?: string) => {
   const [url, setUrl] = useState(urlId);
   const { getPlaylist, setError, setLoading } = useStoreActions(actions => actions.playlists);
+  const { data } = useStoreState(store => store.playlists);
+
+
+
+  useEffect(() => {
+    if (!Object.keys(data).length || !data[urlId as string]) {
+      handleSubmit({});
+    }
+  }, [data, urlId, watch]);
 
   const handleSubmit = ({ event, refetch = false }: HandleSubmitProps) => {
     event && event.preventDefault();
@@ -26,7 +35,8 @@ const useFechPlayList = (urlId?: string) => {
     handleSubmit,
     setUrl,
     url,
-    setLoading
+    setLoading,
+    data
   };
 };
 

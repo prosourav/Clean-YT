@@ -1,41 +1,52 @@
-import { Grid } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
-import SideBar from "./components/Sidebar";
-import VideoContainer from "./components/VideoContainer";
+import { Suspense, useEffect, useState } from "react";
 import { useStoreState } from "../../data/store";
-import { useEffect, useState } from "react";
 import getVideoItems from "../../utils/getVideoItems";
 import useFechPlayList from "../../hooks/useFechPlayList";
+import React from "react";
+import SideBar from "./components/Sidebar";
+const VideoContainer = React.lazy(() => import("./components/VideoContainer"));
 
 const VideoPage = () => {
   const [videoUrl, setVideoUrl] = useState('');
   const { playlistId } = useParams();
-  const { data } = useStoreState((state) => state.playlists);
-  const { visitedplayList } = useStoreState((state) => state.videoInfo);
-  const { handleSubmit, url } = useFechPlayList(playlistId);
-  const activeVideoId = videoUrl.split("=")[1];
+  const [playListId, watch] = [playlistId?.split('&watch=')[0], playlistId?.split('&watch=')[1] as string];
+  const { visitedplayList } = useStoreState(store => store.videoInfo);
+  const { data } = useFechPlayList(playListId, watch);
 
   useEffect(() => {
-    if (url) handleSubmit({});
-  }, [url]);
+    return setVideoUrl(`https://www.youtube.com/watch?v=${watch}`);
+  }, [playListId, watch]);
 
-
-  if (!data || !data[playlistId as string]) {
-    return null;
+  if (!Object.keys(data).length) {
+    return <CircularProgress />;
   }
 
-  const { playlistItems, channelTitle, playlistTitle } = data[playlistId as string];
+  const { playlistItems, channelTitle, playlistTitle } = data[playListId as string];
   const videos: string[] = getVideoItems(playlistItems);
-
 
   return (
     <Grid container spacing={2} width="100%" sx={{ padding: '30px' }}>
+
       <Grid item xs={12} md={8}>
-        <VideoContainer {...{ url: videoUrl, setUrl: setVideoUrl, playlistItems, visitedplayList, playlistId, videos, channelTitle, activeVideoId }} />
+        <Suspense fallback={<CircularProgress />}>
+          <VideoContainer {...{
+            url: videoUrl, setUrl: setVideoUrl,
+            playlistItems, visitedplayList, playlistId, videos,
+            channelTitle, activeVideoId: watch, desc: data[playListId as string]?.playlistDescription
+          }} />
+        </Suspense>
       </Grid>
+      
       <Grid item xs={12} md={4}>
-        <SideBar {...{ playlistItems, setUrl: setVideoUrl, videos, channelTitle, url: videoUrl, playlistTitle, activeVideoId }} />
+          <SideBar {...{
+            playlistItems, setUrl: setVideoUrl, videos,
+            channelTitle, url: videoUrl, playlistTitle,
+            activeVideoId: watch, playlistId
+          }} />
       </Grid>
+
     </Grid>
   );
 };

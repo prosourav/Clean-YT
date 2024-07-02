@@ -27,7 +27,8 @@ interface ActionButtonsProps {
   isRotating: boolean;
   handleRefetch: () => void;
   open: boolean,
-  setOpen: React.Dispatch<React.SetStateAction, boolean>
+  setOpen: React.Dispatch<React.SetStateAction, boolean>,
+  watchUrl: string
 }
 
 // card playlists props
@@ -59,4 +60,18 @@ interface VideoPlayerProps {
   url: string;
   handleAdd: () => void;
   handleNext: () => void;
+}
+
+// navigation
+interface VideoItem {
+  id?: string;
+  primary: string;
+  secondary: string;
+  img: string;
+}
+
+interface FixedBottomNavigationProps {
+  videos: VideoItem[];
+  changeVideo: (item: string) => void;
+  activeVideoId: string;
 }

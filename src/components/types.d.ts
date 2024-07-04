@@ -6,7 +6,6 @@ interface InputHeaderProps {
   error: string;
 }
 
-
 // BoxProps
 interface BoxType {
   title: string;
@@ -54,12 +53,12 @@ interface DialogProps {
   playListName: string
 }
 
-
 // video player
 interface VideoPlayerProps {
   url: string;
   handleAdd: () => void;
   handleNext: () => void;
+  setPlayed: React.Dispatch<React.SetStateAction<number>>
 }
 
 // navigation
@@ -74,4 +73,9 @@ interface FixedBottomNavigationProps {
   videos: VideoItem[];
   changeVideo: (item: string) => void;
   activeVideoId: string;
+}
+
+// videoinfo editor
+interface EditorPropsType {
+  addNote: (data: string) => void;
 }

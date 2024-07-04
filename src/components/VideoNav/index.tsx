@@ -25,7 +25,7 @@ const FixedBottomNavigation: React.FC<FixedBottomNavigationProps> = ({ videos, c
           onClick={() => changeVideo(id as string)}
           sx={{
             backgroundColor: activeVideoId === id ? '#333333' : 'transparent',
-            borderRadius: '4px',
+            borderRadius: '4px', margin: '4px 0px'
           }}
           ref={(el) => (itemRefs.current[index] = el)}
           id={id}
@@ -37,7 +37,7 @@ const FixedBottomNavigation: React.FC<FixedBottomNavigationProps> = ({ videos, c
               sx={{ width: 120, height: 60, borderRadius: 1, pr: 2 }}
             />
           </ListItemAvatar>
-          <ListItemText primary={<TruncatedText {...{text:primary, maxLength: 62 }}/>} secondary={secondary} />
+          <ListItemText primary={<TruncatedText {...{text:primary, maxLength: 60 }}/>} secondary={secondary} />
         </ListItemButton>
       ))}
     </>

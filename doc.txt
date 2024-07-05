@@ -1,1 +1,2 @@
-face huge issue as easy-peasy useStoreActions hook type was throwing error;
+1. face huge issue as easy-peasy useStoreActions hook type was throwing error;
+2. Having some issue with state when a list is rendering and its state  (single item) state is managed by parent component.  

@@ -8,7 +8,7 @@ import SyncIconButton from "./syncButton";
 
 
 const Actionbuttons: React.FC<ActionButtonsProps> = ({ title, handleRemove, playListId, playlistTitle,
-  addTofav, addToRecents, isInFavoriteList, handleRefetch, isRotating, open, setOpen }) => {
+  addTofav, addToRecents, isInFavoriteList, handleRefetch, isRotating, open, setOpen, watchUrl }) => {
 
   const Confirmation = () => {
     if (title === 'Favourite PlayLists' && handleRemove) {
@@ -38,7 +38,7 @@ const Actionbuttons: React.FC<ActionButtonsProps> = ({ title, handleRemove, play
         <Button onClick={handleRecents}>
 
           <Link
-            to={`/player/${playListId}`}
+            to={`/player/${playListId}&watch=${watchUrl}`}
             component={RouterLink}
             variant="body2"
             fontWeight={600}

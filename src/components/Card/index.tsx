@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Box, CardContent, CardMedia, Typography } from "@mui/material";
 import useFechPlayList from "../../hooks/useFechPlayList";
 import Actionbuttons from "./actionbuttons";
+import useRouteHandler from "../../hooks/routeHandler";
 
 
 const PlaylistCardItem: React.FC<PlaylistCardItemProps> = ({
@@ -19,7 +20,10 @@ const PlaylistCardItem: React.FC<PlaylistCardItemProps> = ({
 
   const [isRotating, setIsRotating] = useState(false);
   const [open, setOpen] = useState(false);
+  
+  // function where redux is empty
   const { handleSubmit } = useFechPlayList(playListId);
+  const { watch } = useRouteHandler(playListId);
 
   const handleRefetch = () => {
     handleSubmit({refetch: true});
@@ -72,6 +76,7 @@ const PlaylistCardItem: React.FC<PlaylistCardItemProps> = ({
         isInFavoriteList={isInFavoriteList}
         handleRefetch={handleRefetch}
         isRotating={isRotating}
+        watchUrl={watch}
       />
     </Card>
   );

@@ -11,6 +11,7 @@ export interface StoreModel {
   recents: RecentModal;
   theme: ThemeModel;
   videoInfo: VideoInfoModel;
+  notes: NoteModel;
 }
 
 // playlist model types
@@ -57,4 +58,16 @@ export interface ThemeModel {
   toggleTheme: Action<ThemeModel, void>
 }
 
+// note
+interface NoteType {
+  key: uuid.Translator;
+  id: string;
+  time: string;
+  content: string;
+}
 
+interface NoteModel {
+  items: NoteType[];
+  addToNotes: Action<NoteModel, NoteType>;
+  removeNotes: Action<NoteModel, string>;
+}

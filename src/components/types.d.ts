@@ -6,7 +6,6 @@ interface InputHeaderProps {
   error: string;
 }
 
-
 // BoxProps
 interface BoxType {
   title: string;
@@ -27,7 +26,8 @@ interface ActionButtonsProps {
   isRotating: boolean;
   handleRefetch: () => void;
   open: boolean,
-  setOpen: React.Dispatch<React.SetStateAction, boolean>
+  setOpen: React.Dispatch<React.SetStateAction, boolean>,
+  watchUrl: string
 }
 
 // card playlists props
@@ -53,10 +53,29 @@ interface DialogProps {
   playListName: string
 }
 
-
 // video player
 interface VideoPlayerProps {
   url: string;
   handleAdd: () => void;
   handleNext: () => void;
+  setPlayed: React.Dispatch<React.SetStateAction<number>>
+}
+
+// navigation
+interface VideoItem {
+  id?: string;
+  primary: string;
+  secondary: string;
+  img: string;
+}
+
+interface FixedBottomNavigationProps {
+  videos: VideoItem[];
+  changeVideo: (item: string) => void;
+  activeVideoId: string;
+}
+
+// videoinfo editor
+interface EditorPropsType {
+  addNote: (data: string) => void;
 }

@@ -6,7 +6,7 @@ import useFechPlayList from "../../hooks/useFechPlayList";
 
 
 const Home = () => {
-  const { handleSubmit, setUrl, url } = useFechPlayList();
+  const { handleSubmit, setUrl, url } = useFechPlayList('');
   const { error, data, isLoading } = useStoreState((state) => state.playlists);
   const { items } = useStoreState((state) => state.favorites);
   const { items: recents } = useStoreState((state) => state.recents);

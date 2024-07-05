@@ -5,6 +5,7 @@ import themeModel from './theme-model';
 import { StoreModel } from './types';
 import playlistModel from './playlist-model';
 import videoInfoModel from './videoInfo-model';
+import notesModel from './notes-model';
 
 
 const store = createStore<StoreModel>({
@@ -13,6 +14,7 @@ const store = createStore<StoreModel>({
   recents: recentModel,
   theme: themeModel,
   videoInfo: videoInfoModel,
+  notes: notesModel
 },
 );
 

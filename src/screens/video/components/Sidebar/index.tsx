@@ -1,10 +1,11 @@
 import * as React from 'react';
 import FixedBottomNavigation from '../../../../components/VideoNav';
 import { Box, Grid, List } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 
 
-const SideBar: React.FC<SidebarProps> = ({ playlistItems, channelTitle, setUrl, playlistTitle, videos, activeVideoId }) => {
+const SideBar: React.FC<SidebarProps> = ({ playlistItems, channelTitle, setUrl, playlistId, playlistTitle, videos, activeVideoId }) => {
   const processdData = playlistItems.map((playlistItem) => {
     return {
       id: playlistItem.contentDetails?.videoId,
@@ -14,10 +15,15 @@ const SideBar: React.FC<SidebarProps> = ({ playlistItems, channelTitle, setUrl, 
     };
   });
 
+  const navigate = useNavigate();
 
   const ChangeVideo = (vid: string) => {
-    setUrl(`https://www.youtube.com/watch?v=${vid}`);
+    const parts = playlistId.split('&watch=');
+    const basePlaylistId = parts[0];
+    setUrl(vid);
+    return navigate(`/player/${basePlaylistId}&watch=${vid}`);
   };
+
 
   return (
     <Box>

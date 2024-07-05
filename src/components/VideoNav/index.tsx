@@ -3,22 +3,12 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
+import TruncatedText from '../ellipsis';
 
-export interface VideoItem {
-  id?: string;
-  primary: string;
-  secondary: string;
-  img: string;
-}
-
-interface FixedBottomNavigationProps {
-  videos: VideoItem[];
-  changeVideo: (item: string) => void;
-  activeVideoId: string;
-}
 
 const FixedBottomNavigation: React.FC<FixedBottomNavigationProps> = ({ videos, changeVideo, activeVideoId }) => {
   const itemRefs = React.useRef<(HTMLDivElement | null)[]>([]);
+
 
   React.useEffect(() => {
     const currentItem = itemRefs.current.find((ref) => ref?.id === activeVideoId);
@@ -35,7 +25,7 @@ const FixedBottomNavigation: React.FC<FixedBottomNavigationProps> = ({ videos, c
           onClick={() => changeVideo(id as string)}
           sx={{
             backgroundColor: activeVideoId === id ? '#333333' : 'transparent',
-            borderRadius: '4px'
+            borderRadius: '4px', margin: '4px 0px'
           }}
           ref={(el) => (itemRefs.current[index] = el)}
           id={id}
@@ -47,7 +37,7 @@ const FixedBottomNavigation: React.FC<FixedBottomNavigationProps> = ({ videos, c
               sx={{ width: 120, height: 60, borderRadius: 1, pr: 2 }}
             />
           </ListItemAvatar>
-          <ListItemText primary={primary} secondary={secondary} />
+          <ListItemText primary={<TruncatedText {...{text:primary, maxLength: 60 }}/>} secondary={secondary} />
         </ListItemButton>
       ))}
     </>

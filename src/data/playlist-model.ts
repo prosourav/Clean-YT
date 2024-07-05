@@ -51,13 +51,17 @@ const playlistModel: PlaylistModel = persist(
         }
 
         if (!refetch && getState().data[playlistId]) {
-          return null;
+          // if video page gets reload
+          if(window.location.href.includes('&')){
+            return null;
+          }
+          return toast.success('Playlist already exists');
         }
 
         if (refetch) {
           const lastCached = getState().data[playlistId].cache;
           if (addMinutes(lastCached, cacheTime) > new Date()) {
-            return toast.error('PlayList is already updated');
+            return toast.success('PlayList is already updated');
           }
         }
 

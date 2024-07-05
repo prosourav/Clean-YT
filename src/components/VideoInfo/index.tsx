@@ -1,36 +1,9 @@
 import React, { useState } from 'react';
-import { Tabs, Tab, Box, Container, Typography } from '@mui/material';
+import { Tabs, Tab, Box, Typography } from '@mui/material';
 import 'react-quill/dist/quill.snow.css';
 import Editor from './editor';
-import { NoteType } from '../../data/types';
 import Notes from './note';
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-
-}
-
-
-interface BasicTabsProps {
-  description: string;
-  addNote: (data: string) => void;
-  notes: NoteType[]
-  removeNote: (id: string) => void;
-}
-
-function CustomTabPanel({ children, value, index }: TabPanelProps) {
-
-  return (
-    <Container
-      role="tabpanel"
-      id={`tabpanel-${index}`}
-    >
-      <Box hidden={value !== index} sx={{ p: 3 }}>{children}</Box>
-    </Container>
-  );
-}
+import CustomTabPanel from './tab-panel';
 
 
 

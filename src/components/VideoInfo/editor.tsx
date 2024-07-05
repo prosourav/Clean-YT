@@ -1,16 +1,19 @@
 import { Box, Button, Typography } from '@mui/material';
-import { useState } from 'react';
+import { SetStateAction } from 'react';
 import ReactQuill from 'react-quill';
 import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 
 interface EditorPropsType {
   addNote: (content: string) => void;
+  content: string,
+  setContent: React.Dispatch<SetStateAction<string>>,
+  showNotePad: boolean,
+  setShowNotePad: React.Dispatch<SetStateAction<boolean>>
 }
 
-const Editor: React.FC<EditorPropsType> = ({ addNote }) => {
-  const [content, setContent] = useState('');
-  const [notePad, setNotePad] = useState(true);
+
+const Editor: React.FC<EditorPropsType> = ({ addNote, content, setContent, showNotePad, setShowNotePad }) => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -37,11 +40,11 @@ const Editor: React.FC<EditorPropsType> = ({ addNote }) => {
     >
       <Typography variant="h6" component="h1" gutterBottom>
         Take a note
-        <Button sx={{margin:0, padding:0, width:'0px'}} onClick={() => setNotePad(prev => !prev)} size="small">
-          {notePad ? <ToggleOnIcon color='secondary' /> : <ToggleOffIcon color='secondary' />}
+        <Button sx={{ margin: 0, padding: 0, width: '0px' }} onClick={() => setShowNotePad(prev => !prev)} size="small">
+          {showNotePad ? <ToggleOnIcon color='secondary' /> : <ToggleOffIcon color='secondary' />}
         </Button>
       </Typography>
-      {notePad && (
+      {showNotePad && (
         <>
           <Box sx={{ '.ql-editor': { minHeight: '100px' } }}>
             <ReactQuill

@@ -20,6 +20,7 @@ const PlaylistCardItem: React.FC<PlaylistCardItemProps> = ({
 
   const [isRotating, setIsRotating] = useState(false);
   const [open, setOpen] = useState(false);
+  
   // function where redux is empty
   const { handleSubmit } = useFechPlayList(playListId);
   const { watch } = useRouteHandler(playListId);

@@ -9,7 +9,7 @@ const notesModel: NoteModel = persist(
       state.items.push(payload);
     }),
     removeNotes: action((state, id: string) => {
-      state.items = state.items.filter((note) => note.id !== id);
+      state.items = state.items.filter((note) => note.key !== id);
     }),
   },
   { storage: 'localStorage' }

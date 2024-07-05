@@ -4,16 +4,20 @@ import { useStoreActions, useStoreState } from "../../../../data/store";
 import { useNavigate } from "react-router-dom";
 import VideoInfo from "../../../../components/VideoInfo";
 import { useState } from "react";
+import uuid from "short-uuid";
+import AlertDialog from "../../../../components/Confirmation";
 
 
 const VideoContainer: React.FC<VideoContainerProps> = ({ url, playlistId, videos, desc }: VideoContainerProps) => {
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
   const { updateVisitedPlayList } = useStoreActions(actions => actions.videoInfo);
-  const { addToNotes } = useStoreActions(actions => actions.notes);
+  const { addToNotes, removeNotes } = useStoreActions(actions => actions.notes);
   const activeVideoId = playlistId?.split("&watch=")[1];
   const [played, setPlayed] = useState(0);
   const key = playlistId?.split("&")[0] as string;
   const { items } = useStoreState(store => store.notes);
+  const [deleteId, setDeleteId] = useState('');
 
 
   const handleAdd = () => {
@@ -46,6 +50,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({ url, playlistId, videos
     }
 
     const newNote = {
+      key: uuid.generate(),
       id: `${key}-#${activeVideoId}`,
       time: formattedTime,
       content: data
@@ -54,13 +59,23 @@ const VideoContainer: React.FC<VideoContainerProps> = ({ url, playlistId, videos
     addToNotes(newNote);
   };
 
+  // opening confirmation popup
+  const removeNote = (noteId: string) => {
+    setOpen(true);
+    setDeleteId(noteId);
+  };
+
+  const handleDelete = () => {
+    removeNotes(deleteId);
+  };
+
   const filteredNotes = items.filter(note => note.id.split('-#')[1] === activeVideoId);
   
-
   return (
     <Container>
+      {deleteId && <AlertDialog {...{ open, setOpen, handleDelete, playListName: 'this note' }} />}
       <VideoPlayer {...{ handleAdd, url, handleNext, setPlayed }} />
-      <VideoInfo description={desc} addNote={addNote} notes={filteredNotes} />
+      <VideoInfo description={desc} addNote={addNote} notes={filteredNotes} removeNote={removeNote} />
     </Container>
   );
 };

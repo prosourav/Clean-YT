@@ -60,6 +60,7 @@ export interface ThemeModel {
 
 // note
 interface NoteType {
+  key: uuid.Translator;
   id: string;
   time: string;
   content: string;

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Tabs, Tab, Box, Container } from '@mui/material';
+import { Tabs, Tab, Box, Container, Typography } from '@mui/material';
 import 'react-quill/dist/quill.snow.css';
 import Editor from './editor';
 import { NoteType } from '../../data/types';
+import Notes from './note';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -11,6 +12,13 @@ interface TabPanelProps {
 
 }
 
+
+interface BasicTabsProps {
+  description: string;
+  addNote: (data: string) => void;
+  notes: NoteType[]
+  removeNote: (id: string) => void;
+}
 
 function CustomTabPanel({ children, value, index }: TabPanelProps) {
 
@@ -24,21 +32,19 @@ function CustomTabPanel({ children, value, index }: TabPanelProps) {
   );
 }
 
-interface BasicTabsProps {
-  description: string;
-  addNote: (data: string) => void;
-  notes: NoteType[]
-}
 
-export default function VideoInfo({ description, addNote, notes }: BasicTabsProps) {
+
+export default function VideoInfo({ description, addNote, notes, removeNote }: BasicTabsProps) {
   const [value, setValue] = useState(0);
+  const [content, setContent] = useState('');
+  const [showNotePad, setShowNotePad] = useState(true);
 
   const ChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
   console.log("notes", notes);
-  
+
 
 
   return (
@@ -55,7 +61,16 @@ export default function VideoInfo({ description, addNote, notes }: BasicTabsProp
         {description}
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <Editor {...{ addNote }}/>
+        <Editor {...{ addNote, content, setContent, showNotePad, setShowNotePad }} />
+
+        {
+          notes.length > 0 && <>
+           <Typography variant='h6' sx={{marginTop:'10px'}}>
+              All Notes
+            </Typography> 
+            {notes.map((note) => <Notes key={note.key} note={note} removeNote={removeNote} />)}
+          </>
+        }
       </CustomTabPanel>
     </Box>
   );

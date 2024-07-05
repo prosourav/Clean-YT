@@ -30,7 +30,7 @@ export default function AlertDialog({ open, setOpen, handleDelete, playListName 
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Are You sure you want to delete {playListName}?
+            Are you sure you want to delete {playListName}?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

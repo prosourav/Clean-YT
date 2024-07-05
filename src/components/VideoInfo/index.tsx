@@ -43,9 +43,6 @@ export default function VideoInfo({ description, addNote, notes, removeNote }: B
     setValue(newValue);
   };
 
-  console.log("notes", notes);
-
-
 
   return (
     <Box>

@@ -3,9 +3,10 @@ import VideoPlayer from "../../../../components/VideoPlayer";
 import { useStoreActions, useStoreState } from "../../../../data/store";
 import { useNavigate } from "react-router-dom";
 import VideoInfo from "../../../../components/VideoInfo";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import uuid from "short-uuid";
 import AlertDialog from "../../../../components/Confirmation";
+import React from "react";
 
 
 const VideoContainer: React.FC<VideoContainerProps> = ({ url, playlistId, videos, desc }: VideoContainerProps) => {
@@ -65,17 +66,28 @@ const VideoContainer: React.FC<VideoContainerProps> = ({ url, playlistId, videos
     setDeleteId(noteId);
   };
 
-  const handleDelete = () => {
+  const handleDelete = useCallback(() => {
     removeNotes(deleteId);
-  };
+  }, [deleteId, removeNotes]);
 
-  const filteredNotes = items.filter(note => note.id.split('-#')[1] === activeVideoId);
-  
+  const filteredNotes = useMemo(() => {
+    return items.filter(note => note.id.split('-#')[1] === activeVideoId);
+  }, [items, activeVideoId]);
+
+  const memoizedVideoInfo = useMemo(() => (
+    <VideoInfo
+      description={desc}
+      addNote={addNote}
+      notes={filteredNotes}
+      removeNote={removeNote}
+    />
+  ), [filteredNotes]);
+
   return (
     <Container>
       {deleteId && <AlertDialog {...{ open, setOpen, handleDelete, playListName: 'this note' }} />}
       <VideoPlayer {...{ handleAdd, url, handleNext, setPlayed }} />
-      <VideoInfo description={desc} addNote={addNote} notes={filteredNotes} removeNote={removeNote} />
+      {memoizedVideoInfo}
     </Container>
   );
 };

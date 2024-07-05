@@ -10,16 +10,6 @@ import { ExpandCircleDown } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
-interface NoteItem {
-  note: {
-    key: string;
-    id: string;
-    time: string;
-    content: string;
-  }
-  removeNote: (id: string) => void;
-}
-
 const Notes: React.FC<NoteItem> = ({ note, removeNote }) => {
   const [show, setShow] = useState(false);
 

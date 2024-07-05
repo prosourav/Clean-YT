@@ -79,3 +79,38 @@ interface FixedBottomNavigationProps {
 interface EditorPropsType {
   addNote: (data: string) => void;
 }
+
+interface EditorPropsType {
+  addNote: (content: string) => void;
+  content: string,
+  setContent: React.Dispatch<SetStateAction<string>>,
+  showNotePad: boolean,
+  setShowNotePad: React.Dispatch<SetStateAction<boolean>>
+}
+
+
+// videoinfo index
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+interface BasicTabsProps {
+  description: string;
+  addNote: (data: string) => void;
+  notes: NoteType[]
+  removeNote: (id: string) => void;
+}
+
+// notes
+interface NoteItem {
+  note: {
+    key: string;
+    id: string;
+    time: string;
+    content: string;
+  }
+  removeNote: (id: string) => void;
+}

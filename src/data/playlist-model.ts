@@ -3,7 +3,7 @@ import getPlaylist from '../api';
 import toast from 'react-hot-toast';
 import { Playlist } from './types';
 import { addMinutes } from 'date-fns';
-import { cacheTime } from '../config';
+import { cacheTime, maxData } from '../config';
 
 export interface PlaylistModel {
   data: Record<string, Playlist>;
@@ -46,7 +46,7 @@ const playlistModel: PlaylistModel = persist(
         const { getState } = helpers;
         const { playlistId, refetch = false } = payload;
 
-        if (Object.keys(getState().data).length >= 10 && !refetch) {
+        if (Object.keys(getState().data).length >= maxData && !refetch) {
           return toast.error('Maximum playlist size exceeded');
         }
 

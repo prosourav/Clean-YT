@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const SideBar: React.FC<SidebarProps> = ({ playlistItems, channelTitle, setUrl, playlistId, playlistTitle, videos, activeVideoId }) => {
+
   const processdData = playlistItems.map((playlistItem) => {
     return {
       id: playlistItem.contentDetails?.videoId,
@@ -18,6 +19,9 @@ const SideBar: React.FC<SidebarProps> = ({ playlistItems, channelTitle, setUrl, 
   const navigate = useNavigate();
 
   const ChangeVideo = (vid: string) => {
+    if (vid === activeVideoId) {
+      return;
+    }
     const parts = playlistId.split('&watch=');
     const basePlaylistId = parts[0];
     setUrl(vid);

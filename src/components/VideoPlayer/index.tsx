@@ -1,11 +1,9 @@
 import { Box, CircularProgress } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 
-const VideoPlayer = ({ handleAdd, url, handleNext, setPlayed }: VideoPlayerProps) => {
+const VideoPlayer = ({ handleAdd, url, handleNext, playerRef }: VideoPlayerProps) => {
   const [urlNew, setNewUrl] = useState(url);
-  const playerRef = useRef(null);
-
 
   useEffect(() => {
     setNewUrl(url);
@@ -25,9 +23,6 @@ const VideoPlayer = ({ handleAdd, url, handleNext, setPlayed }: VideoPlayerProps
         height={"450px"}
         url={urlNew}
         onEnded={handleNext}
-        onProgress={(progress) => {
-          setPlayed(progress.playedSeconds);
-        }}
         onStart={handleAdd}
       />
     </Box>

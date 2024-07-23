@@ -54,11 +54,15 @@ interface DialogProps {
 }
 
 // video player
+interface ReactPlayerInterface {
+  getCurrentTime: () => number;
+  getDuration: () => number;
+}
 interface VideoPlayerProps {
   url: string;
   handleAdd: () => void;
   handleNext: () => void;
-  setPlayed: React.Dispatch<React.SetStateAction<number>>
+  playerRef: ReactPlayerInstance | null;
 }
 
 // navigation

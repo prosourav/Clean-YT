@@ -3,10 +3,11 @@ import VideoPlayer from "../../../../components/VideoPlayer";
 import { useStoreActions, useStoreState } from "../../../../data/store";
 import { useNavigate } from "react-router-dom";
 import VideoInfo from "../../../../components/VideoInfo";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import uuid from "short-uuid";
 import AlertDialog from "../../../../components/Confirmation";
 import React from "react";
+import ReactPlayer from "react-player";
 
 
 const VideoContainer: React.FC<VideoContainerProps> = ({ url, playlistId, videos, desc }: VideoContainerProps) => {
@@ -15,10 +16,10 @@ const VideoContainer: React.FC<VideoContainerProps> = ({ url, playlistId, videos
   const { updateVisitedPlayList } = useStoreActions(actions => actions.videoInfo);
   const { addToNotes, removeNotes } = useStoreActions(actions => actions.notes);
   const activeVideoId = playlistId?.split("&watch=")[1];
-  const [played, setPlayed] = useState(0);
   const key = playlistId?.split("&")[0] as string;
   const { items } = useStoreState(store => store.notes);
   const [deleteId, setDeleteId] = useState('');
+  const playerRef = useRef<ReactPlayer>(null);
 
 
   const handleAdd = () => {
@@ -36,8 +37,9 @@ const VideoContainer: React.FC<VideoContainerProps> = ({ url, playlistId, videos
   };
 
   const addNote = (data: string) => {
-    const currentTimeInSeconds = played;
-    // const currentTimeInSeconds = playerRef.current.getCurrentTime();
+    // const currentTimeInSeconds = played;
+    if (!playerRef.current) return; 
+    const currentTimeInSeconds = playerRef.current.getCurrentTime();
 
     const hours = Math.floor(currentTimeInSeconds / 3600);
     const minutes = Math.floor((currentTimeInSeconds % 3600) / 60);
@@ -86,7 +88,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({ url, playlistId, videos
   return (
     <Container>
       {deleteId && <AlertDialog {...{ open, setOpen, handleDelete, playListName: 'this note' }} />}
-      <VideoPlayer {...{ handleAdd, url, handleNext, setPlayed }} />
+      <VideoPlayer {...{ handleAdd, url, handleNext, playerRef }} />
       {memoizedVideoInfo}
     </Container>
   );

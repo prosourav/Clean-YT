@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from 'react';
-import { useStoreState } from '../data/store';
+import { useStoreState } from '../providers/store';
 import getVideoItems from '../utils/getVideoItems';
 
 const useRouteHandler = (playListId: string) => {

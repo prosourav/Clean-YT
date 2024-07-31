@@ -1,5 +1,5 @@
 import { Container } from "@mui/material";
-import { useStoreState } from "../../data/store";
+import { useStoreState } from "../../providers/store";
 
 import Box from "../home/components/Box";
 

@@ -2,7 +2,7 @@ import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import LayOut from "./components/Layout";
 import AppRoute from "./router";
 import { useStoreState } from "easy-peasy";
-import { StoreModel } from "./data/types";
+import { StoreModel } from "./providers/types";
 import { Toaster } from "react-hot-toast";
 
 

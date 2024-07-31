@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Container, Grid, Typography } from "@mui/material";
 import PlaylistCardItem from "../../../../components/Card";
-import { useStoreActions, useStoreState } from "../../../../data/store";
+import { useStoreActions, useStoreState } from "../../../../providers/store";
 
 const Box: React.FC<BoxType> = ({ listItems, title }) => {
   const { data } = useStoreState((state) => state.playlists);

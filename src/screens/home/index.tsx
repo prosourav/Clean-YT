@@ -1,6 +1,6 @@
 import { Box as MuiBox, Container, Typography } from "@mui/material";
 import InputHeader from "../../components/HeaderInput";
-import { useStoreState } from "../../data/store";
+import { useStoreState } from "../../providers/store";
 import Box from "./components/Box";
 import useFechPlayList from "../../hooks/useFechPlayList";
 

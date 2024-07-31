@@ -1,7 +1,7 @@
 
 import { Container } from "@mui/material";
 import Box from "../home/components/Box";
-import { useStoreState } from "../../data/store";
+import { useStoreState } from "../../providers/store";
 
 
 const Favoutite = () => {

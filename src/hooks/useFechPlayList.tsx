@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import formatUrl from '../utils/formatUrl';
 import isvalidUrl from '../utils/isValidUrl';
-import { useStoreActions, useStoreState } from '../data/store';
+import { useStoreActions, useStoreState } from '../providers/store';
 
 type HandleSubmitProps = {
   event?: React.FormEvent<HTMLFormElement>;

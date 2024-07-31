@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 import VideoPlayer from "../../../../components/VideoPlayer";
-import { useStoreActions, useStoreState } from "../../../../data/store";
+import { useStoreActions, useStoreState } from "../../../../providers/store";
 import { useNavigate } from "react-router-dom";
 import VideoInfo from "../../../../components/VideoInfo";
 import { useCallback, useMemo, useRef, useState } from "react";
@@ -38,7 +38,7 @@ const VideoContainer: React.FC<VideoContainerProps> = ({ url, playlistId, videos
 
   const addNote = (data: string) => {
     // const currentTimeInSeconds = played;
-    if (!playerRef.current) return; 
+    if (!playerRef.current) return;
     const currentTimeInSeconds = playerRef.current.getCurrentTime();
 
     const hours = Math.floor(currentTimeInSeconds / 3600);

@@ -1,7 +1,7 @@
 import { CircularProgress, Grid } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { Suspense, useEffect, useState } from "react";
-import { useStoreState } from "../../data/store";
+import { useStoreState } from "../../providers/store";
 import getVideoItems from "../../utils/getVideoItems";
 import useFechPlayList from "../../hooks/useFechPlayList";
 import React from "react";
@@ -38,13 +38,13 @@ const VideoPage = () => {
           }} />
         </Suspense>
       </Grid>
-      
+
       <Grid item xs={12} md={4}>
-          <SideBar {...{
-            playlistItems, setUrl: setVideoUrl, videos,
-            channelTitle, url: videoUrl, playlistTitle,
-            activeVideoId: watch, playlistId
-          }} />
+        <SideBar {...{
+          playlistItems, setUrl: setVideoUrl, videos,
+          channelTitle, url: videoUrl, playlistTitle,
+          activeVideoId: watch, playlistId
+        }} />
       </Grid>
 
     </Grid>

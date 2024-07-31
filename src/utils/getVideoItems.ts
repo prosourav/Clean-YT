@@ -1,4 +1,4 @@
-import { PlaylistItems } from "../data/types";
+import { PlaylistItems } from "../providers/types";
 
 const getVideoItems = (data: PlaylistItems[]): string[] => {
   const finalArray = data.map(item => {

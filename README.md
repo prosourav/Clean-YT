@@ -17,7 +17,7 @@ This web app is designed specifically for students/user who watch tutorials on Y
 
 ## Techs and tools
 
-**Server:** React, Typescript, Youtube API , Matireal UI, Redux, Easy-Peasy, Axios
+**Tech stack:** React, Typescript, Youtube API , Matireal UI, Redux, Easy-Peasy, Axios
 
 ## Environment Variables
 
